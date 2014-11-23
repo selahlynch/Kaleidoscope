@@ -1,4 +1,4 @@
-package bouncingBall;
+package kaleidoscope;
 
 import java.awt.Color;
 import java.awt.Graphics;

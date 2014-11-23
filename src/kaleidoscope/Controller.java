@@ -3,7 +3,7 @@
  * use of the Model-View-Controller design pattern and the Timer and
  * Observer/Observable classes.
  */
-package bouncingBall;
+package kaleidoscope;
 
 
 import java.awt.BorderLayout;

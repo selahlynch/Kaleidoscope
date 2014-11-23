@@ -1,4 +1,4 @@
-package bouncingBall;
+package kaleidoscope;
 
 import java.util.Observable;
 import java.util.Timer;
