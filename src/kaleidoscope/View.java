@@ -39,11 +39,19 @@ public class View extends JPanel implements Observer {
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
-        g.setColor(Color.red);
-        g.fillOval(model.getX(), model.getY(),
-                model.BALL_SIZE, model.BALL_SIZE);
-    }
 
+        Point p = new Point(model.getX(), model.getY(), getWidth(), getHeight());
+        Point[] pReflections = p.getReflections();
+        
+        g.setColor(Color.green);
+        for(int i=0; i<pReflections.length; i++){
+        	Point pDraw = pReflections[i];
+            g.fillOval(pDraw.getX(), pDraw.getY(), model.BALL_SIZE, model.BALL_SIZE);
+        }
+        
+        
+    }
+    
     /**
      * When an Observer notifies Observers (and this View is an Observer),
      * this is the method that gets called.
