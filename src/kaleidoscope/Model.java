@@ -1,5 +1,7 @@
 package kaleidoscope;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,40 +16,33 @@ import java.util.TimerTask;
  * @author <Your name goes here>
  */
 public class Model extends Observable {
-    public final int BALL_SIZE = 20;
-    private int xPosition = 0;
-    private int yPosition = 0;
     private int xLimit, yLimit;
-    private int xDelta = 6;
-    private int yDelta = 4;
     private Timer timer;
+    ArrayList<Figure> figures;
+    
+    //constructor
+    public Model(){
+    	figures = new ArrayList<Figure>(); 
+    	figures.add(new Figure(Color.RED, 3, 2));
+    	figures.add(new Figure(Color.GREEN, 2, 3));
+    }
 
+       
+    
     /**
      * Sets the "walls" that the ball should bounce off from.
      * 
      * @param xLimit The position (in pixels) of the wall on the right.
      * @param yLimit The position (in pixels) of the floor.
      */
-    public void setLimits(int xLimit, int yLimit) {
-        this.xLimit = xLimit - BALL_SIZE;
-        this.yLimit = yLimit - BALL_SIZE;
-        xPosition = Math.min(xPosition, xLimit);
-        yPosition = Math.min(yPosition, yLimit);
+    public void resizeWindow(int xLimit, int yLimit) {
+    	this.xLimit = xLimit;
+    	this.yLimit = yLimit;
+        for(int i=0; i<figures.size(); i++){
+        	figures.get(i).setLimits(xLimit, yLimit);
+        }
     }
 
-    /**
-     * @return The balls X position.
-     */
-    public int getX() {
-        return xPosition;
-    }
-
-    /**
-     * @return The balls Y position.
-     */
-    public int getY() {
-        return yPosition;
-    }
     
     /**
      * Tells the ball to start moving. This is done by starting a Timer
@@ -67,33 +62,18 @@ public class Model extends Observable {
     }
     
     /**
-     * Tells the ball to advance one step in the direction that it is moving.
-     * If it hits a wall, its direction of movement changes.
-     */
-    public void makeOneStep() {
-        // Do the work
-        xPosition += xDelta;
-        if (xPosition < 0 || xPosition >= xLimit) {
-            xDelta = -xDelta;
-            xPosition += xDelta;
-        }
-        yPosition += yDelta;
-        if (yPosition < 0 || yPosition >= yLimit) {
-            yDelta = -yDelta;
-            yPosition += yDelta;
-        }
-        // Notify observers
-        setChanged();
-        notifyObservers();
-    }
-    
-    /**
      * Tells the model to advance one "step."
      */
     private class Strobe extends TimerTask {
         @Override
         public void run() {
-            makeOneStep();
+            for(int i=0; i<figures.size(); i++){
+            	figures.get(i).makeOneStep();
+            }            
+            // Notify observers
+            setChanged();
+            notifyObservers();
+
         }
     }
 }

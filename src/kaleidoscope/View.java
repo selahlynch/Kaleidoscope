@@ -40,13 +40,19 @@ public class View extends JPanel implements Observer {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        Point p = new Point(model.getX(), model.getY(), getWidth(), getHeight());
-        Point[] pReflections = p.getReflections();
-        
-        g.setColor(Color.green);
-        for(int i=0; i<pReflections.length; i++){
-        	Point pDraw = pReflections[i];
-            g.fillOval(pDraw.getX(), pDraw.getY(), model.BALL_SIZE, model.BALL_SIZE);
+        for(int i=0; i<model.figures.size(); i++){
+        	Figure figure = model.figures.get(i);
+
+            Point p = new Point(figure.getX(), figure.getY(), getWidth(), getHeight());
+            Point[] pReflections = p.getReflections();
+
+            g.setColor(figure.color);
+            
+            for(int j=0; j<pReflections.length; j++){
+            	Point pDraw = pReflections[j];
+                g.fillOval(pDraw.getX(), pDraw.getY(), figure.BALL_SIZE, figure.BALL_SIZE);    
+            }
+
         }
         
         

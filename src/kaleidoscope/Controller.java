@@ -28,6 +28,7 @@ public class Controller extends JFrame {
     JPanel buttonPanel = new JPanel();
     JButton runButton = new JButton("Run");
     JButton stopButton = new JButton("Stop");
+    JButton newBallButton = new JButton("New Ball");
     Timer timer;
 
     /** The Model is the object that does all the computations. It is
@@ -75,6 +76,7 @@ public class Controller extends JFrame {
         this.add(BorderLayout.SOUTH, buttonPanel);
         buttonPanel.add(runButton);
         buttonPanel.add(stopButton);
+        buttonPanel.add(newBallButton);
         stopButton.setEnabled(false);
         this.add(BorderLayout.CENTER, view);
     }
@@ -101,14 +103,19 @@ public class Controller extends JFrame {
                 model.pause();
             }
         });
+        // The Stop button tells the Model to pause
+        newBallButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+            	//model.newBall();
+            }
+        });
         // When the window is resized, the Model is given the new limits
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent arg0) {
-                model.setLimits(view.getWidth(), view.getHeight());
+                model.resizeWindow(view.getWidth(), view.getHeight());
             }
         });
     }
-
-
 }
