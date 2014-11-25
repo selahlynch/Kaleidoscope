@@ -7,11 +7,13 @@ package kaleidoscope;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Timer;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -108,6 +110,7 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
             	//model.newBall();
+            	model.addNewFigure(Color.YELLOW, 3,4);
             }
         });
         // When the window is resized, the Model is given the new limits

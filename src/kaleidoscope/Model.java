@@ -23,8 +23,9 @@ public class Model extends Observable {
     //constructor
     public Model(){
     	figures = new ArrayList<Figure>(); 
-    	figures.add(new Figure(Color.RED, 3, 2));
-    	figures.add(new Figure(Color.GREEN, 2, 3));
+    	figures.add(new Figure(Color.RED, 3, 2, "circle", 20));
+    	figures.add(new Figure(Color.GREEN, 7, 1, "triangle", 30));
+    	figures.add(new Figure(Color.BLUE, 2, 3, "circle", 30));
     }
 
        
@@ -41,6 +42,11 @@ public class Model extends Observable {
         for(int i=0; i<figures.size(); i++){
         	figures.get(i).setLimits(xLimit, yLimit);
         }
+    }
+    public void addNewFigure(Color color, int xDelta, int yDelta){
+    	Figure f = new Figure(color, xDelta, yDelta, "circle", 15);
+    	f.setLimits(xLimit, yLimit);
+    	figures.add(f);
     }
 
     

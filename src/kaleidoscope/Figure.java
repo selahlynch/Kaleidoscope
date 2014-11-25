@@ -3,19 +3,23 @@ package kaleidoscope;
 import java.awt.Color;
 
 public class Figure {
-    public final int BALL_SIZE = 20;
+    //public final int BALL_SIZE = 20;
     private int xPosition, yPosition;
     private int xDelta, yDelta;
     private int xLimit, yLimit;
     private String type;
     public Color color;
+    public String shape;
+    int size;
 
-    public Figure(Color color, int xDelta, int yDelta){
+    public Figure(Color color, int xDelta, int yDelta, String shape, int size){
     	xPosition = 0;
     	yPosition = 0;
     	this.xDelta = xDelta;
     	this.yDelta = yDelta;
     	this.color = color;
+    	this.shape = shape;
+    	this.size = size;
     }
     
     
@@ -26,8 +30,8 @@ public class Figure {
      * @param yLimit The position (in pixels) of the floor.
      */
     public void setLimits(int xLimit, int yLimit) {
-        this.xLimit = xLimit - BALL_SIZE;
-        this.yLimit = yLimit - BALL_SIZE;
+        this.xLimit = xLimit - size;
+        this.yLimit = yLimit - size;
         xPosition = Math.min(xPosition, xLimit);
         yPosition = Math.min(yPosition, yLimit);
     }

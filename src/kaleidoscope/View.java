@@ -20,6 +20,8 @@ public class View extends JPanel implements Observer {
     /** This is what we will be observing. */
     Model model;
 
+    Reflector reflector;
+    
     /**
      * Constructor.
      * @param model The Model whose working is to be displayed.
@@ -39,24 +41,58 @@ public class View extends JPanel implements Observer {
     public void paint(Graphics g) {
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, getWidth(), getHeight());
-
+        reflector = new Reflector(getWidth(), getHeight());
         for(int i=0; i<model.figures.size(); i++){
         	Figure figure = model.figures.get(i);
-
-            Point p = new Point(figure.getX(), figure.getY(), getWidth(), getHeight());
-            Point[] pReflections = p.getReflections();
-
             g.setColor(figure.color);
-            
-            for(int j=0; j<pReflections.length; j++){
-            	Point pDraw = pReflections[j];
-                g.fillOval(pDraw.getX(), pDraw.getY(), figure.BALL_SIZE, figure.BALL_SIZE);    
-            }
-
+            int coords[] = {figure.getX(), figure.getY()};
+    		int size = figure.size;
+        	if(figure.shape=="circle") drawCircle(g, coords, size);
+        	if(figure.shape=="triangle") drawTriangle(g, coords, size);
+        	if(figure.shape=="star") drawStar(g, coords, size);            	
         }
-        
-        
     }
+
+    public void drawCircle(Graphics g, int[] coords, int size){
+    	int[][] allCoords = reflector.getAll(coords);
+    	for(int i = 0; i<allCoords.length; i++){
+    		int[] theseCoords = allCoords[i];
+        	g.fillOval(theseCoords[0], theseCoords[1], size, size);                		    		
+    	}
+    }
+
+    public void drawTriangle(Graphics g, int[] coords, int size){
+    	int x_center = coords[0];
+    	int y_center = coords[1];
+    	int[][] triCoords = new int[3][2]; 
+    	triCoords[0][0] = x_center + 0;
+    	triCoords[0][1] = (int)(y_center - 2*size/Math.sqrt(3));
+    	triCoords[1][0] = x_center - size;
+    	triCoords[1][1] = (int)(y_center + size/Math.sqrt(3));
+    	triCoords[2][0] = x_center + size;
+    	triCoords[2][1] = (int)(y_center + size/Math.sqrt(3));
+    	int[][][] reflectedTriCoords = new int[3][8][2];
+    	reflectedTriCoords[0] = reflector.getAll(triCoords[0]);
+    	reflectedTriCoords[1] = reflector.getAll(triCoords[1]);
+    	reflectedTriCoords[2] = reflector.getAll(triCoords[2]);
+
+    	for(int i=0; i<8; i++){
+        	int[] xArray = new int[3];
+        	xArray[0] =	reflectedTriCoords[0][i][0];
+        	xArray[1] =	reflectedTriCoords[1][i][0];
+        	xArray[2] =	reflectedTriCoords[2][i][0];
+        	int[] yArray = new int[3];
+        	yArray[0] =	reflectedTriCoords[0][i][1];
+        	yArray[1] =	reflectedTriCoords[1][i][1];
+        	yArray[2] =	reflectedTriCoords[2][i][1];
+        	g.fillPolygon(xArray, yArray, 3);                		    		
+    	}
+    }
+    
+    public void drawStar(Graphics g, int[] coords, int size){
+    	g.fillOval(coords[0], coords[1], size, size);                		
+    }
+    
     
     /**
      * When an Observer notifies Observers (and this View is an Observer),
