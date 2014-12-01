@@ -42,11 +42,22 @@ public class ReflectorTest {
 	}
 
 	@Test
-	public void testGetAll() {
+	public void testGetAllPoint() {
 		Reflector r = new Reflector(60, 60);
 		int[] coords = {10, 30};
 		int[] rCoords = {30, 10};
 		assertArrayEquals(rCoords, r.getAll(coords)[4]);
 	}
 
+	@Test
+	public void testGetAllPointArray() {
+		Reflector r = new Reflector(60, 60);
+		int[][] coordsArray = {{10, 30}, {5, 19}};
+		int[] rCoords0 = {30, 10};
+		int[] rCoords1 = {19, 5};
+		assertArrayEquals(rCoords0, r.getAll(coordsArray)[0][4]);
+		assertArrayEquals(rCoords1, r.getAll(coordsArray)[1][4]);
+	}
+
+	
 }

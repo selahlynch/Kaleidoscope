@@ -49,4 +49,14 @@ public class Reflector {
 		return reflections;
 	}
 
+	int[][][] getAll(int[][] JPanelCoordArray){
+		int numCoords = JPanelCoordArray.length;
+		int[][][] allReflections = new int [numCoords][8][2];
+		for(int i = 0; i< JPanelCoordArray.length; i++){
+			int[] JPanelCoords = JPanelCoordArray[i]; 
+			allReflections[i] = getAll(JPanelCoords);
+		}
+		return allReflections;
+	}
+	
 }

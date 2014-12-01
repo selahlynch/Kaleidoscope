@@ -71,11 +71,7 @@ public class View extends JPanel implements Observer {
     	triCoords[1][1] = (int)(y_center + size/Math.sqrt(3));
     	triCoords[2][0] = x_center + size;
     	triCoords[2][1] = (int)(y_center + size/Math.sqrt(3));
-    	int[][][] reflectedTriCoords = new int[3][8][2];
-    	reflectedTriCoords[0] = reflector.getAll(triCoords[0]);
-    	reflectedTriCoords[1] = reflector.getAll(triCoords[1]);
-    	reflectedTriCoords[2] = reflector.getAll(triCoords[2]);
-
+    	int[][][] reflectedTriCoords = reflector.getAll(triCoords);    	
     	for(int i=0; i<8; i++){
         	int[] xArray = new int[3];
         	xArray[0] =	reflectedTriCoords[0][i][0];
