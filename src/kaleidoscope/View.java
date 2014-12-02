@@ -39,17 +39,17 @@ public class View extends JPanel implements Observer {
      */
     @Override
     public void paint(Graphics g) {
-        g.setColor(Color.WHITE);
+        g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
         reflector = new Reflector(getWidth(), getHeight());
         for(int i=0; i<model.figures.size(); i++){
         	Figure figure = model.figures.get(i);
-            g.setColor(figure.color);
+            g.setColor(figure.shapeColor);
             int coords[] = {figure.getX(), figure.getY()};
     		int size = figure.size;
         	if(figure.shape=="circle") drawCircle(g, coords, size);
         	if(figure.shape=="triangle") drawTriangle(g, coords, size);
-        	if(figure.shape=="star") drawStar(g, coords, size);            	
+        	if(figure.shape=="rectangle") drawRectangle(g, coords, size);            	
         }
     }
 
@@ -57,7 +57,7 @@ public class View extends JPanel implements Observer {
     	int[][] allCoords = reflector.getAll(coords);
     	for(int i = 0; i<allCoords.length; i++){
     		int[] theseCoords = allCoords[i];
-        	g.fillOval(theseCoords[0], theseCoords[1], size, size);                		    		
+        	g.fillOval(theseCoords[0]-size/2, theseCoords[1]-size/2, size, size);                		    		
     	}
     }
 
@@ -85,8 +85,15 @@ public class View extends JPanel implements Observer {
     	}
     }
     
-    public void drawStar(Graphics g, int[] coords, int size){
-    	g.fillOval(coords[0], coords[1], size, size);                		
+    public void drawRectangle(Graphics g, int[] coords, int size){
+    	size = size*2;
+    	int[][] allCoords = reflector.getAll(coords);
+    	for(int i = 0; i<allCoords.length; i++){
+    		int[] theseCoords = allCoords[i];
+        	g.fillRect(theseCoords[0]-size/2, theseCoords[1]-size/4, size, size/2);
+        	g.fillRect(theseCoords[0]-size/4, theseCoords[1]-size/2, size/2, size);
+    	}
+    	
     }
     
     

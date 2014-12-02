@@ -8,16 +8,16 @@ public class Figure {
     private int xDelta, yDelta;
     private int xLimit, yLimit;
     private String type;
-    public Color color;
+    public Color shapeColor;
     public String shape;
     int size;
 
-    public Figure(Color color, int xDelta, int yDelta, String shape, int size){
+    public Figure(Color shapeColor, int xDelta, int yDelta, String shape, int size){
     	xPosition = 0;
     	yPosition = 0;
     	this.xDelta = xDelta;
     	this.yDelta = yDelta;
-    	this.color = color;
+    	this.shapeColor = shapeColor;
     	this.shape = shape;
     	this.size = size;
     }
@@ -51,6 +51,16 @@ public class Figure {
      */
     public int getY() {
         return yPosition;
+    }
+    
+    public void speedUp(){
+    	xDelta = xDelta + 1*(Math.abs(xDelta)/xDelta);
+    	yDelta = yDelta + 1*(Math.abs(yDelta)/yDelta);
+    }
+    
+    public void slowDown(){
+    	xDelta = (Math.abs(xDelta) <= 1) ? xDelta : xDelta - 1*(Math.abs(xDelta)/xDelta);
+    	yDelta = (Math.abs(yDelta) <= 1) ? yDelta : yDelta - 1*(Math.abs(yDelta)/yDelta);
     }
     
     

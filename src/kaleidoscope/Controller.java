@@ -8,6 +8,7 @@ package kaleidoscope;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -31,6 +32,11 @@ public class Controller extends JFrame {
     JButton runButton = new JButton("Run");
     JButton stopButton = new JButton("Stop");
     JButton newBallButton = new JButton("New Ball");
+    JButton newTriButton = new JButton ("New Triangle");
+    JButton newRectangleButton = new JButton ("New Plus");
+    JButton changeColorsButton = new JButton ("Change Colors");
+    JButton speedUpButton = new JButton ("Speed Up");
+    JButton slowDownButton = new JButton ("Slow Down");
     Timer timer;
 
     /** The Model is the object that does all the computations. It is
@@ -65,7 +71,7 @@ public class Controller extends JFrame {
     private void display() {
         layOutComponents();
         attachListenersToComponents();
-        setSize(300, 300);
+        setSize(600, 600);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -74,11 +80,17 @@ public class Controller extends JFrame {
      * Arranges the various components in the GUI.
      */
     private void layOutComponents() {
-        setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
+        buttonPanel.setLayout(new GridLayout(3,3));
         this.add(BorderLayout.SOUTH, buttonPanel);
         buttonPanel.add(runButton);
         buttonPanel.add(stopButton);
         buttonPanel.add(newBallButton);
+        buttonPanel.add(newTriButton);
+        buttonPanel.add(newRectangleButton);
+        buttonPanel.add(changeColorsButton);
+        buttonPanel.add(speedUpButton);
+        buttonPanel.add(slowDownButton);
         stopButton.setEnabled(false);
         this.add(BorderLayout.CENTER, view);
     }
@@ -110,7 +122,42 @@ public class Controller extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
             	//model.newBall();
-            	model.addNewFigure(Color.YELLOW, 3,4);
+            	model.addNewFigure(3,4, "circle");
+            }
+        });
+        newTriButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+            	//model.newBall();
+            	model.addNewFigure(3,4, "triangle");
+            }
+        });
+        newRectangleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+            	//model.newBall();
+            	model.addNewFigure(3,4, "rectangle");
+            }
+        });
+        changeColorsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+            	//model.newBall();
+            	model.changeColors();
+            }
+        });
+        speedUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+            	//model.newBall();
+            	model.speedUp();
+            }
+        });
+        slowDownButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+            	//model.newBall();
+            	model.slowDown();
             }
         });
         // When the window is resized, the Model is given the new limits

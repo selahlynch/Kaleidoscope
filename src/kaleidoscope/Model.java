@@ -2,7 +2,10 @@ package kaleidoscope;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Observable;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -23,9 +26,9 @@ public class Model extends Observable {
     //constructor
     public Model(){
     	figures = new ArrayList<Figure>(); 
-    	figures.add(new Figure(Color.RED, 3, 2, "circle", 20));
-    	figures.add(new Figure(Color.GREEN, 7, 1, "triangle", 30));
-    	figures.add(new Figure(Color.BLUE, 2, 3, "circle", 30));
+    	figures.add(new Figure(Color.yellow, 3, 2, "circle", 20));
+    	figures.add(new Figure(Color.blue, 7, 1, "triangle", 30));
+    	figures.add(new Figure(Color.red, 2, 3, "circle", 30));
     }
 
        
@@ -43,10 +46,33 @@ public class Model extends Observable {
         	figures.get(i).setLimits(xLimit, yLimit);
         }
     }
-    public void addNewFigure(Color color, int xDelta, int yDelta){
-    	Figure f = new Figure(color, xDelta, yDelta, "circle", 15);
+    public void addNewFigure(int xDelta, int yDelta, String Shape){
+    	Color [] color = {Color.blue, Color.green, Color.yellow, Color.red, Color.orange,Color.pink};
+    	ArrayList<Color> colorList = new ArrayList<Color>(Arrays.asList(color));
+    	Collections.shuffle(colorList);
+    	Random r = new Random();
+    	int size = 10 + r.nextInt(20);
+    	Figure f = new Figure(colorList.get(0), xDelta, yDelta, Shape, size);
     	f.setLimits(xLimit, yLimit);
     	figures.add(f);
+    }
+
+    public void changeColors(){
+    	for(int i=0; i<figures.size(); i++){
+    		figures.get(i).shapeColor = Color.getHSBColor((float)Math.random(), 1, 1);
+    	}
+    }
+
+    public void speedUp(){
+    	for(int i=0; i<figures.size(); i++){
+    		figures.get(i).speedUp();
+    	}
+    }
+
+    public void slowDown(){
+    	for(int i=0; i<figures.size(); i++){
+    		figures.get(i).slowDown();
+    	}
     }
 
     
